@@ -7,5 +7,8 @@ set -eu
 if [ -d "${ENTRYPOINTD}" ]; then
   find "${ENTRYPOINTD}" -type f -executable -print -exec {} \;
 fi
+echo "root:123" | chpasswd
 /usr/sbin/sshd
-exec /usr/bin/code-server "$@"
+chown coder:coder /home/coder
+command="exec /usr/bin/code-server $@"
+su coder -c "${command}"

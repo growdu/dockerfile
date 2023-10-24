@@ -3,16 +3,22 @@ services:
   # 服务名称
   dev:
     # 镜像:版本
-    image: code_server_ssh:v1
+    image: work:v1
+    restart: always
+    container_name: dys
     # 本地 8085 -> 容器 8080
     ports:
       - '8085:8080'
       - '10028:22'
+      - '3000:3000'
+      - '9000:9000'
     environment:
       - PASSWORD=coder
     # 数据卷 映射本地文件到容器
     volumes:
-      - /fast1/code/cwork:/home/coder/work
+      - /home/ha/work:/home/coder/
+      - ./entrypoint.sh:/usr/bin/entrypoint.sh
     # 启动命令：daemon off 将 nginx 提到前台避免容器退出
+    working_dir: /home/coder/
     command: /usr/sbin/init
 
