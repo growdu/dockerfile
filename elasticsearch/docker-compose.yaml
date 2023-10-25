@@ -10,9 +10,10 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx1096m" #设置使用jvm内存大小
       - bootstrap.memory_lock=true
     volumes:
-      - ./es/plugins:/usr/local/dockercompose/elasticsearch/plugins #插件文件挂载
-      - ./es/data:/usr/local/dockercompose/elasticsearch/data:rw #数据文件挂载
-      - ./es/logs:/usr/local/dockercompose/elasticsearch/logs:rw
+      - ./es/plugins:/usr/share/elasticsearch/plugins #插件文件挂载
+      - ./es/data:/usr/share/elasticsearch/data:rw #数据文件挂载
+      - ./es/logs:/usr/share/elasticsearch/logs:rw
+      - ./es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
       - 9200:9200
       - 9300:9300
@@ -23,13 +24,4 @@ services:
            memory: 1000M
         reservations:
            memory: 200M
-  kibana:
-    image: kibana:8.9.0
-    container_name: kibana
-    depends_on:
-      - elasticsearch #kibana在elasticsearch启动之后再启动
-    volumes:
-      - ./es/config/kibana:/usr/share/kibana/config/kibana.yaml
-    ports:
-      - 5601:5601
 
