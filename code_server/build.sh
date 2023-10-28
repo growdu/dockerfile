@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo docker build -t code_server:v1 .
+sudo docker build -t oh-my-code:v1 .
